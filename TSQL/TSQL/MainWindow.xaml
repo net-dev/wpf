@@ -5,47 +5,201 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TSQL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="GDAŃSK - Nowy Port" Height="450" Width="800" Background="#FFB1C4DE" ResizeMode="NoResize">
     <Window.Resources>
         <BitmapImage x:Key="VeselBmp" UriSource="vessel.jpg"/>
+        <BitmapImage x:Key="VeselBackBmp" UriSource="ship.jpg"/>
+        <!--<x:Array Type="BitmapImage" x:Key="BitmapTab" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+            <BitmapImage UriSource="vessel.jpg"/>
+        </x:Array>
+        <Image x:Key="VeselImg" Source="vessel.jpg"/>
+        <x:Array Type="Image" x:Key="ImageTab">
+            <Image Source="vessel.jpg"/>
+        </x:Array>-->
+        <local:LeftMarginConverter x:Key="LeftMarginConverter" />
+        <local:OpacityConverter x:Key="OpacityConverter" />
+        <!--<local:LeftMarginBackConverter x:Key="LeftMarginBackConverter" />-->
     </Window.Resources>
-    <!--<Grid Margin="0,1,0,-1">-->
-    <!--<DataGrid Name="g1" AutoGenerateColumns="false">
+    <Grid Margin="1,1,1,1">
+        <!--<DataGrid Name="g1" AutoGenerateColumns="false">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" Header="Id" Width="100"/>
             </DataGrid.Columns>
         </DataGrid>-->
-    <!--</Grid>-->
-    <!--<StackPanel>
-        <Slider IsSnapToTickEnabled="true" TickFrequency="5" Name="Percent" Minimum="0" Maximum="100"/>
-        <TextBox Name="PercentText" Width="50" Text="{Binding ElementName=Percent, Path=Value, Mode=TwoWay}"/>
-    </StackPanel>-->
-    <Grid Margin="1,1,1,1">
-        <StackPanel>
-            <Slider IsSnapToTickEnabled="true" TickFrequency="0.1" Name="Percent" Minimum="0" Maximum="1"/>
-            <TextBox Name="PercentText" Width="50" Text="{Binding ElementName=Percent, Path=Value, Mode=TwoWay}"/>
-            <Button Name="DayBtn" Width="100" Height="30">
-                <Button.Triggers>
-                    <EventTrigger RoutedEvent="Button.MouseEnter">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation
+        <Viewport3D Margin="{Binding ElementName=Percent, Path=Value, Converter={StaticResource LeftMarginConverter}}">
+            <ModelVisual3D>
+                <ModelVisual3D.Content>
+                    <Model3DGroup>
+                        <!-- Lights -->
+                        <AmbientLight Color="White" />
+
+                        <!-- The image -->
+                        <GeometryModel3D>
+                            <GeometryModel3D.Geometry>
+                                <MeshGeometry3D
+                            Positions="0,-1,0 2,-1,0 2,1,0 0,1,0"
+                            TriangleIndices="0,1,2 2,3,0"
+                            TextureCoordinates="0,1 1,1 1,0 0,0"
+                        >
+                                </MeshGeometry3D>
+                            </GeometryModel3D.Geometry>
+                            <GeometryModel3D.Material>
+                                <DiffuseMaterial x:Name="texture">
+                                    <DiffuseMaterial.Brush>
+                                        <ImageBrush ImageSource="vessel.jpg"/>
+                                    </DiffuseMaterial.Brush>
+                                </DiffuseMaterial>
+                            </GeometryModel3D.Material>
+                            <GeometryModel3D.Transform>
+                                <RotateTransform3D>
+                                    <RotateTransform3D.Rotation>
+                                        <AxisAngleRotation3D Axis="0,1,0" Angle="{Binding ElementName=Percent, Path=Value}"/>
+                                    </RotateTransform3D.Rotation>
+                                </RotateTransform3D>
+                            </GeometryModel3D.Transform>
+                        </GeometryModel3D>
+                    </Model3DGroup>
+                </ModelVisual3D.Content>
+            </ModelVisual3D>
+
+            <Viewport3D.Camera>
+                <PerspectiveCamera
+            Position = "0, 0, 3.5"
+            LookDirection = "0, 0, -1"
+            UpDirection = "0, 1, 0"
+            FieldOfView = "60">
+                </PerspectiveCamera>
+            </Viewport3D.Camera>
+        </Viewport3D>
+        <Viewport3D>
+            <ModelVisual3D>
+                <ModelVisual3D.Content>
+                    <Model3DGroup>
+                        <!-- Lights -->
+                        <AmbientLight Color="White" />
+
+                        <!-- The image -->
+                        <GeometryModel3D>
+                            <GeometryModel3D.Geometry>
+                                <MeshGeometry3D
+                            Positions="0,-1,0 2,-1,0 2,1,0 0,1,0"
+                            TriangleIndices="0,1,2 2,3,0"
+                            TextureCoordinates="0,1 1,1 1,0 0,0"
+                        >
+                                </MeshGeometry3D>
+                            </GeometryModel3D.Geometry>
+                            <GeometryModel3D.Material>
+                                <DiffuseMaterial>
+                                    <DiffuseMaterial.Brush>
+                                        <ImageBrush ImageSource="{StaticResource VeselBackBmp}"/>
+                                    </DiffuseMaterial.Brush>
+                                </DiffuseMaterial>
+                            </GeometryModel3D.Material>
+                            <GeometryModel3D.Transform>
+                                <RotateTransform3D>
+                                    <RotateTransform3D.Rotation>
+                                        <AxisAngleRotation3D Axis="0,1,0" Angle="{Binding ElementName=PercentBack, Path=Value}"/>
+                                    </RotateTransform3D.Rotation>
+                                </RotateTransform3D>
+                            </GeometryModel3D.Transform>
+                        </GeometryModel3D>
+                    </Model3DGroup>
+                </ModelVisual3D.Content>
+            </ModelVisual3D>
+
+            <Viewport3D.Camera>
+                <PerspectiveCamera
+            Position = "0, 0, 3.5"
+            LookDirection = "0, 0, -1"
+            UpDirection = "0, 1, 0"
+            FieldOfView = "60">
+                </PerspectiveCamera>
+            </Viewport3D.Camera>
+        </Viewport3D>
+        <Slider Visibility="Hidden" IsSnapToTickEnabled="true" TickFrequency="0.1" Name="Percent" Minimum="0" Maximum="90"/>
+        <Slider Visibility="Hidden" Margin="0,100,0,0" Value="0" IsSnapToTickEnabled="true" TickFrequency="0.1" Name="PercentBack" Minimum="0" Maximum="90"/>
+        <TextBox Name="PercentText" Width="1" Text="{Binding ElementName=Percent, Path=Value, Mode=TwoWay}"/>
+        <Button Visibility="Hidden" Name="DayBtn" Width="100" Height="30">
+            Animate
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
                                     Storyboard.TargetName="Percent"
                                     Storyboard.TargetProperty="Value"
-                                    From="0" To="1" Duration="0:0:5"/>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Button.Triggers>
-            </Button>
-            <!--<Image Margin="0,0,0,0" Source="vessel.jpg" Opacity="{Binding ElementName=Percent, Path=Value}"/>-->
-            <Image Margin="0,0,0,0" Source="{StaticResource VeselBmp}" Opacity="{Binding ElementName=Percent, Path=Value}"/>
-            <Label>
-                <AccessText TextWrapping="WrapWithOverflow">
-                    Description of the Vessel
-    Formating in style
-                </AccessText>
-            </Label>
-        </StackPanel>
+                                    From="0" To="90" Duration="0:0:10"/>
+                            <DoubleAnimation
+                                    Storyboard.TargetName="PercentBack"
+                                    Storyboard.TargetProperty="Value"
+                                    From="90" To="0" Duration="0:0:10"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+        <Button Visibility="Hidden" Name="NightBtn" Width="50" Height="30">
+            ReAnimate
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                    Storyboard.TargetName="Percent"
+                                    Storyboard.TargetProperty="Value"
+                                    From="90" To="0" Duration="0:0:10"/>
+                            <DoubleAnimation
+                                    Storyboard.TargetName="PercentBack"
+                                    Storyboard.TargetProperty="Value"
+                                    From="0" To="90" Duration="0:0:10"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+        <Label Margin="20,50,0,0" Name="ShipName" FontSize="14">
+            Nazwa
+        </Label>
+        <Label Margin="20,95,0,0" Name="ShipTonnage" FontSize="14">
+            Ładowność
+        </Label>
+        <Label Margin="20,140,0,0" Name="ShipLength" FontSize="14">
+            Długość
+        </Label>
+        <Label Margin="20,185,0,0" Name="ShipWidth" FontSize="14">
+            Szerokość
+        </Label>
+        <Label Margin="20,230,0,0" Name="ShipSpeed" FontSize="14">
+            Prędkość
+        </Label>
+        <Label Margin="20,275,0,0" Name="ShipOwner" FontSize="14">
+            Armator
+        </Label>
+        <Label Margin="20,320,0,0" Name="ShipYear" FontSize="14">
+            Rok budowy
+        </Label>
+        <Label Margin="120,50,410,326" Name="ShipNameValue" FontSize="14" FontWeight="Bold" Opacity="{Binding ElementName=Percent, Path=Value, Converter={StaticResource OpacityConverter}}">
+            <TextBlock TextWrapping="WrapWithOverflow">
+            NOVA STAR
+            </TextBlock>
+        </Label>
+        <Label Margin="120,95,0,0" Name="ShipTonnageValue" FontSize="14" FontWeight="Bold" Opacity="{Binding ElementName=Percent, Path=Value, Converter={StaticResource OpacityConverter}}">
+            27744
+        </Label>
+        <Label Margin="120,140,0,0" Name="ShipLengthValue" FontSize="14" FontWeight="Bold" Opacity="{Binding ElementName=Percent, Path=Value, Converter={StaticResource OpacityConverter}}">
+            161
+        </Label>
+        <Label Margin="120,185,0,0" Name="ShipWidthValue" FontSize="14" FontWeight="Bold" Opacity="{Binding ElementName=Percent, Path=Value, Converter={StaticResource OpacityConverter}}">
+            26.6
+        </Label>
+        <Label Margin="120,230,0,0" Name="ShipSpeedValue" FontSize="14" FontWeight="Bold" Opacity="{Binding ElementName=Percent, Path=Value, Converter={StaticResource OpacityConverter}}">
+            17.2
+        </Label>
+        <Label Margin="120,275,0,0" Name="ShipOwnerValue" FontSize="14" FontWeight="Bold" Opacity="{Binding ElementName=Percent, Path=Value, Converter={StaticResource OpacityConverter}}">
+            Bahamas
+        </Label>
+        <Label Margin="120,320,0,0" Name="ShipYearValue" FontSize="14" FontWeight="Bold" Opacity="{Binding ElementName=Percent, Path=Value, Converter={StaticResource OpacityConverter}}">
+            2011
+        </Label>
     </Grid>
 </Window>
